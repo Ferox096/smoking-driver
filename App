@@ -1,63 +1,193 @@
-###############################################################################
-# Set default behavior to automatically normalize line endings.
-###############################################################################
-* text=auto
+#include <iostream>
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <sstream>
 
-###############################################################################
-# Set default behavior for command prompt diff.
-#
-# This is need for earlier builds of msysgit that does not have it on by
-# default for csharp files.
-# Note: This is only used by command line
-###############################################################################
-#*.cs     diff=csharp
+using namespace sf;
 
-###############################################################################
-# Set the merge driver for project and solution files
-#
-# Merging from the command prompt will add diff markers to the files if there
-# are conflicts (Merging from VS is not affected by the settings below, in VS
-# the diff markers are never inserted). Diff markers may cause the following 
-# file extensions to fail to load in VS. An alternative would be to treat
-# these files as binary and thus will always conflict and require user
-# intervention with every merge. To do so, just uncomment the entries below
-###############################################################################
-#*.sln       merge=binary
-#*.csproj    merge=binary
-#*.vbproj    merge=binary
-#*.vcxproj   merge=binary
-#*.vcproj    merge=binary
-#*.dbproj    merge=binary
-#*.fsproj    merge=binary
-#*.lsproj    merge=binary
-#*.wixproj   merge=binary
-#*.modelproj merge=binary
-#*.sqlproj   merge=binary
-#*.wwaproj   merge=binary
+int main()
+{
+	sf::RenderWindow window(sf::VideoMode(1920,1080), "Test", sf::Style::Fullscreen);
+	Texture CarTexture1, CarTexture2, CarTexture3, CarTexture4, CarTexture5, CarTexture6, CarTexture7, CarTexture8, CarTexture9,
+		CarTexture10, CarTexture11, CarTexture12, CarTexture13, CarTexture14, CarTexture15, CarTexture16, CarTexture17, CarTexture18,
+		CarTexture19, menuTexture1, menuTexture2, p_leftTexture, p_rightTexture;
+	CarTexture1.loadFromFile("F:\\TestApp\\Car\\car1.png");
+	CarTexture2.loadFromFile("F:\\TestApp\\Car\\car2.png");
+	CarTexture3.loadFromFile("F:\\TestApp\\Car\\car3.png");
+	CarTexture4.loadFromFile("F:\\TestApp\\Car\\car4.png");
+	CarTexture5.loadFromFile("F:\\TestApp\\Car\\car5.png");
+	CarTexture6.loadFromFile("F:\\TestApp\\Car\\car6.png");
+	CarTexture7.loadFromFile("F:\\TestApp\\Car\\car7.png");
+	CarTexture8.loadFromFile("F:\\TestApp\\Car\\car8.png");
+	CarTexture9.loadFromFile("F:\\TestApp\\Car\\car9.png");
+	CarTexture10.loadFromFile("F:\\TestApp\\Car\\car10.png");
+	CarTexture11.loadFromFile("F:\\TestApp\\Car\\car11.png");
+	CarTexture12.loadFromFile("F:\\TestApp\\Car\\car12.png");
+	CarTexture13.loadFromFile("F:\\TestApp\\Car\\car13.png");
+	CarTexture14.loadFromFile("F:\\TestApp\\Car\\car14.png");
+	CarTexture15.loadFromFile("F:\\TestApp\\Car\\car15.png");
+	CarTexture16.loadFromFile("F:\\TestApp\\Car\\car16.png");
+	CarTexture17.loadFromFile("F:\\TestApp\\Car\\car17.png");
+	CarTexture18.loadFromFile("F:\\TestApp\\Car\\car18.png");
+	CarTexture19.loadFromFile("F:\\TestApp\\Car\\car19.png");
 
-###############################################################################
-# behavior for image files
-#
-# image files are treated as binary by default.
-###############################################################################
-#*.jpg   binary
-#*.png   binary
-#*.gif   binary
+	p_leftTexture.loadFromFile("F:\\TestApp\\left.png");
+	p_rightTexture.loadFromFile("F:\\TestApp\\rigth.png");
 
-###############################################################################
-# diff behavior for common document formats
-# 
-# Convert binary document formats to text before diffing them. This feature
-# is only available from the command line. Turn it on by uncommenting the 
-# entries below.
-###############################################################################
-#*.doc   diff=astextplain
-#*.DOC   diff=astextplain
-#*.docx  diff=astextplain
-#*.DOCX  diff=astextplain
-#*.dot   diff=astextplain
-#*.DOT   diff=astextplain
-#*.pdf   diff=astextplain
-#*.PDF   diff=astextplain
-#*.rtf   diff=astextplain
-#*.RTF   diff=astextplain
+	menuTexture1.loadFromFile("F:\\TestApp\\scere.png");
+	menuTexture2.loadFromFile("F:\\TestApp\\exit.png");
+
+	Sprite Car1(CarTexture1), Car2(CarTexture2), Car3(CarTexture3), Car4(CarTexture4), Car5(CarTexture5), Car6(CarTexture6), Car7(CarTexture7), Car8(CarTexture8),
+		Car9(CarTexture9), Car10(CarTexture10), Car11(CarTexture11), Car12(CarTexture12), Car13(CarTexture13), Car14(CarTexture14), Car15(CarTexture15), Car16(CarTexture16),
+		Car17(CarTexture17), Car18(CarTexture18), Car19(CarTexture19), Text1(menuTexture1), Text2(menuTexture2), p_right(p_rightTexture), p_left(p_leftTexture);
+	Sprite Cars[19] = { Car1, Car2, Car3, Car4, Car5, Car6, Car7, Car8,
+	  Car9, Car10, Car11, Car12, Car13, Car14, Car15, Car16,
+	  Car17, Car18, Car19 };
+
+	int n_cars = 0;
+	bool isMenu = 1;
+	int menuNum = 0;
+
+	int i = 0;
+	while (i <= 18)
+	{
+		Cars[i].setPosition(window.getSize().x / 2 - CarTexture1.getSize().x / 2, 200);
+		i++;
+	}
+
+
+	Text1.setPosition(window.getSize().x / 2 - menuTexture1.getSize().x / 2, 400);
+	Text2.setPosition(window.getSize().x / 2 - menuTexture2.getSize().x / 2, 500);
+	p_left.setPosition(window.getSize().x / 2 - p_leftTexture.getSize().x / 2 - 100, 230);
+	p_right.setPosition(window.getSize().x / 2 - p_rightTexture.getSize().x / 2 + 100, 230);
+
+	
+	while (isMenu)
+	{
+		Text1.setColor(Color::White);
+		Text2.setColor(Color::White);
+
+
+		window.clear(Color(46, 56, 54));
+
+
+		if (Keyboard::isKeyPressed(Keyboard::Up)) { menuNum = menuNum - 1; sleep(seconds(0.2)); }
+		if (Keyboard::isKeyPressed(Keyboard::Down)) { menuNum = menuNum + 1; sleep(seconds(0.2)); }
+		if (menuNum == -1) { menuNum = 2; }
+		if (menuNum == 3) { menuNum = 0; }
+		if (menuNum == 0) {
+			if (Keyboard::isKeyPressed(Keyboard::Right)) { n_cars++; sleep(seconds(0.2)); };
+			if (Keyboard::isKeyPressed(Keyboard::Left)) { n_cars--; sleep(seconds(0.2)); };
+			if (n_cars == -1) { n_cars = 18; };
+			if (n_cars == 19) { n_cars = 0; };
+			window.draw(p_left); window.draw(p_right);
+		}
+
+		if (menuNum == 1) { Text1.setColor(Color::Blue); }
+		if (menuNum == 2) { Text2.setColor(Color::Blue); }
+		//if (IntRect(610, 380, 190, 50).contains(Mouse::getPosition(window))) { menu1.setColor(Color::Blue); menuNum = 1; }
+		//if (IntRect(610, 430, 190, 50).contains(Mouse::getPosition(window))) { menu2.setColor(Color::Blue); menuNum = 2; }
+		//if (IntRect(610, 480, 190, 50).contains(Mouse::getPosition(window))) { back.setColor(Color::Blue); menuNum = 3; }
+
+		if (Keyboard::isKeyPressed(Keyboard::Enter))
+		{
+			if (menuNum == 0) isMenu = false;
+			if (menuNum == 1) { window.draw(Car1); window.display(); while (!Keyboard::isKeyPressed(Keyboard::Escape)); sleep(seconds(0.5)); }
+			if (menuNum == 2) { window.close(); isMenu = false; }
+
+		}
+		if (Keyboard::isKeyPressed(Keyboard::Escape)) { window.close(); isMenu = false; }
+
+		window.draw(Cars[n_cars]);
+		window.draw(Text1);
+		window.draw(Text2);
+
+		window.display();
+	}
+	window.setMouseCursorVisible(false);
+	sf::Image a;
+	a.loadFromFile("F:\\TestApp\\Car\\car1.png");
+
+	Sprite c = Cars[n_cars];
+	c.setPosition(window.getSize().x / 2 - a.getSize().x / 2, window.getSize().y - a.getSize().y);
+
+	sf::Image a1;
+	a1.loadFromFile("F:\\TestApp\\road1.jpg");
+	sf::Texture b1;
+	b1.loadFromImage(a1);
+	sf::Sprite c1;
+	c1.setTexture(b1);
+	c1.setPosition(0, -1080);
+	
+	sf::Text text;
+	sf::Font font;
+	font.loadFromFile("F:\\TestApp\\DroidSans-Bold.ttf");
+	text.setFont(font); // font is a sf::Font
+	text.setCharacterSize(32); // in pixels, not points!
+	text.setFillColor(sf::Color::Red);
+
+	int q2 = 0, Score = 0, k = 0, u = 0;
+	float CurrentFrame = 0; 
+	float speed = 0.5, manever = 0.5;
+
+	sf::Clock clock;
+
+	while (window.isOpen())
+	{
+		int time = clock.getElapsedTime().asMicroseconds();
+		clock.restart();
+		time = time / 800;
+
+		if (k != 0 && k % 500 == 0 && speed <= 1.7)
+			speed += 0.02;
+		if (k != 0 && k % 1000 == 0 && manever <= 0.7)
+			manever += 0.02;
+		
+		std::cout << speed << std::endl;
+
+		if (c1.getPosition().y >= 0)
+			c1.setPosition(0, -1080);
+		c1.move(0, speed*time);
+		text.setPosition(50,100);
+
+		sf::Event event;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			if (c.getPosition().x > 480)
+				c.move(-manever*time, 0);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			if (c.getPosition().x < 1448 - a.getSize().x + 6)
+				c.move(manever*time, 0);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+		{
+			window.close();
+		}
+
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+		}
+
+		if (u <= 3)
+			u += 1;
+		else
+		{
+			u = 0;
+			k += 1;
+		}
+
+		std::ostringstream pl;
+		pl << k;
+		text.setString("Score: " + pl.str());
+		window.clear();
+		window.draw(c1);
+		window.draw(c);
+		window.draw(text);
+		window.display();
+	}
+	return 0;
+}
